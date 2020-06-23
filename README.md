@@ -15,8 +15,8 @@ This project was done solely in Python, while achieving the same data and modell
 
 <ins>Link to Python Notebook</ins>
 
-* <a href="http://yann.lecun.com/exdb/mnist/train-images-idx3-ubyte.gz">Part 1. ETL</a>
-* <a href="http://yann.lecun.com/exdb/mnist/train-images-idx3-ubyte.gz">Part 2. Analysis and Predictive Modelling</a>
+* <a href="https://github.com/ngalp/projects/blob/master/hdb_retrievedata.ipynb">Part 1. ETL</a>
+* <a href="https://github.com/ngalp/projects/blob/master/hdb_analysedata.ipynb">Part 2. Analysis and Predictive Modelling</a>
 
 
 ### (2) Sentiment analysis on restaurant reviews with NLTK and TextBlob ###
@@ -28,19 +28,19 @@ The project included web scraping of more than 450,000 restaurant reviews of 1,7
 <ins>Link to Python Notebook</ins>
 
 * Part 1: Web-scraping review data (The code for this is not uploaded to github)
-* <a href="http://yann.lecun.com/exdb/mnist/train-images-idx3-ubyte.gz">Part 2: Explore the data</a>
-* <a href="http://yann.lecun.com/exdb/mnist/train-images-idx3-ubyte.gz">Part 3: Prepare the data (pre-processing)</a>
-* <a href="http://yann.lecun.com/exdb/mnist/train-images-idx3-ubyte.gz">Part 4a: Modelling using word vector generated from CountVectorizer</a>
-* <a href="http://yann.lecun.com/exdb/mnist/train-images-idx3-ubyte.gz">Part 4b: Modelling using word vector generated from TDIDFVectorizer</a>
-* <a href="http://yann.lecun.com/exdb/mnist/train-images-idx3-ubyte.gz">Part 5: Summary Results with Topics Identified</a>
+* <a href="https://github.com/ngalp/projects/blob/master/restaurant_explore.ipynb">Part 2: Explore the data</a>
+* <a href="https://github.com/ngalp/projects/blob/master/restaurant_preprocess.ipynb">Part 3: Prepare the data (pre-processing)</a>
+* <a href="https://github.com/ngalp/projects/blob/master/restaurant_cv.ipynb">Part 4a: Modelling using word vector generated from CountVectorizer</a>
+* <a href="https://github.com/ngalp/projects/blob/master/restaurant_tv.ipynb">Part 4b: Modelling using word vector generated from TDIDFVectorizer</a>
+* <a href="https://github.com/ngalp/projects/blob/master/restaurant_sentiment.ipynb">Part 5: Summary Results with Topics Identified</a>
 
 ### 3. Predicting Customer Purchases using Machine Learning ###
 For this project, the aim is to predict purchases using the target field TargetBuy (0, 1). The code includes data exploration and cleaning/ preparation steps. Modelling is then performed with various sklearn (scikit-learn) models listed below, as well as exploration of whether <a. Target Class Balancing using SMOTE (Synthetic Minority Oversampling Technique)> and <b. Dimensionality Reduction with PCA> have a positive impact on the prediction results. Grid-search is then performed on selected well-performing models. The final model(s) are applied to the test data.
 
-<a href="http://yann.lecun.com/exdb/mnist/train-images-idx3-ubyte.gz"><ins>Link to Python Notebook</ins></a>
+<a href="https://github.com/ngalp/projects/blob/master/predictive_model.ipynb"><ins>Link to Python Notebook</ins></a>
 
 
 ### 4. MNIST: Image Recognition ###
 The MNIST is widely known as the 'Hello World' dataset for computer vision. Records have already been size-normalized and centered in a fixed-size image, thus useful to try out different machine learning techniques as minimal efforts are required on preprocessing and formatting.
 
-<a href="http://yann.lecun.com/exdb/mnist/train-images-idx3-ubyte.gz"><ins>Link to Python Notebook</ins></a>
+<a href="https://github.com/ngalp/projects/blob/master/mnist.ipynb"><ins>Link to Python Notebook</ins></a>
