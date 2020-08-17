@@ -76,11 +76,23 @@ The following model were run for the regression experiments to explore multiple 
 * AdaBoostRegressor
 * MLPRegressor
 
+The following model were run for the regression experiments to explore multiple regression models and review the performance of each.
+* LogisticRegression
+* DecisionTreeClassifier
+* KNeighborsClassifier
+* LinearSVC 
+* RandomForestClassifier
+* MLPClassifier
+
 g. Evaluation of the models developed. Any metrics used in the evaluation should also be explained.
 * For regression, SVR has the best RMSE of 107K.
 * RMSE is the standard deviation of the residuals (prediction errors). Residuals are a measure of how far from the regression line data points are; RMSE is a measure of how spread out these residuals are. 
+
+* For classification, MLC has the best Accuracy of 0.7027873946479999.
 
 ## Other considerations for deploying the models developed.
 * More geo-related data could be incorporated into the model considering that King County government has numerous geo-related datasets online.
 * Increasing useful features could improve model performance
 * Data integrity could be improved, and investigation should be done on duplicate and missing data.
+* Feature selection, over sampling, grid search are additional ways to improve the model.
+
