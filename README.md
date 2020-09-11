@@ -1,37 +1,97 @@
-# Python projects
+NG MANYI ALPHANIA
 
-This repository contains python projects which had been submitted as part of course requirements for NYP SD-BBDA conducted in 2018/2019.
+ng.alphania@gmail.com
 
-### (1) Predicting HDB resale prices with sci-kit learn ### 
+### Overview of the submitted folder and the folder structure.
+* src (folder) : contains regression.py
+* data (folder) : used to store retrieved/ downloaded data and geojson file.
+* root folder : contains README.md, requirements.txt, config.yaml and eda.ipynb
 
-Link to Jupyter Notebook: <a href="https://github.com/ngalp/projects/blob/master/hdb_retrievedata.ipynb">Part 1. ETL </a> and <a href="https://github.com/ngalp/projects/blob/master/hdb_analysedata.ipynb">Part 2. Analysis and Predictive Modelling</a>
+### Instructions for executing the pipeline and modifying any parameters.
+The following parameters are in the config.yaml file and the variables defined at the start of the .py file could be amended for ease of running the pipeline.
 
-For this project, the aim is to predict HDB resale prices, taking into account 
-```
-1. property inherent characteristics such as tenure, floor area, floor level, etc,
-2. location inherent characteristics such as market segment, property district, and 
-3. proximity to amenities such as MRT stations, primary schools, hawker centers and markets.
-```
-This project was done solely in Python, while achieving the same data and modelling objectives when multiple applications were required previously*. The code includes data exploration and cleaning/ preparation steps. Of note is the use of shapely and geopy for geospatial plotting and proximity computation from longitude and latitude data.
+Within config:
+* Data path
+* Table name
+* Target
+* Training size
 
-(*For a previous module/ project, three yr private property transaction data was obtained via URA Data Service API, geographical data analysed in QGIS (to obtain distances from/ proximity to amenities), data prepared in Excel Power Query and predictive model built in Rapidminer to predict private property resale prices.)
+At start of py file:
+* Numerical columns to execute standard scaler
+* List of models to be evaluated
 
-### (2) Sentiment analysis on restaurant reviews with NLTK and TextBlob ###
+### Description of logical steps/flow of the pipeline. 
+* Setting up the enviroment (importing libraries)
+* Loading the data (either to read from local or url)
+* Data preprocessing steps (as defined and explained in eda.ipynb)
+* Split data into training and test sets
+* Standard scale selected numerical columns
+* Log transform target variable
+* Run models
+* Evaluate performance on exponential of results (due to previously log transformed target) and obtain best RMSE score
 
-Link to Jupyter Notebook: Part 1: Web-scraping (The code for this is not uploaded to github), <a href="https://github.com/ngalp/projects/blob/master/restaurant_explore.ipynb">Part 2: Data Exploration</a>, <a href="https://github.com/ngalp/projects/blob/master/restaurant_preprocess.ipynb">Part 3: Data Pre-processing</a>, <a href="https://github.com/ngalp/projects/blob/master/restaurant_cv.ipynb">Part 4a: Modelling using CountVectorizer</a>, <a href="https://github.com/ngalp/projects/blob/master/restaurant_tv.ipynb">b: TDIDFVectorizer</a>, and  <a href="https://github.com/ngalp/projects/blob/master/restaurant_sentiment.ipynb">Part 5: Result Summary with Topics Identified</a>
+### Overview of key findings from the EDA conducted in Task 1 and the choices made in the pipeline based on these findings, particularly any feature engineering.
+Based exploratory data analysis the following data preprocessing steps are performed
+* Change type. 'date' to datetime, after performing fuzzywuzzy of the textual date which had spelling errors
+* Dealing with Missing Values 
+> Drop all na records from important columns id, price, date, lot_size and living_room_size as they are critical to the model. 
+> Removed review_score column due to high number of missing data and seemingly no correlation to price.
+> Drop all na records from remaining columns. 
 
-For this project, the aim is to predict sentiment of a review using sentiment analysis. From there, key topics/ area are identified for each sentiment class. With this, positive areas and room-for-improvement areas can be identified from the reviews by applying topic modelling using LDA or similar analysis to identify key topics/ area within each sentiment class. 
+* Other Preprocessing Steps
+> Drop rows where 'date' in Mar 2014 is irregular as the dataset mainly begins from May 2014  (no Apr 2014).
+> Drop rows where 'bathrooms' and 'bedrooms' is 0.
+> Numerous duplicate data were noted. Thus, removed rows (i.e. keep only one of, and last) where (1) all records are duplicate (2) id is duplicate
 
-The project included web scraping of more than 450,000 restaurant reviews of 1,7k restaurants using a combination of beautiful soup and selenium (code and output file stored in local is not uploaded to github). The code include feature generation, data cleaning (including lemmatization, tokenization, contractions, stopword removal etc). CountVectorizer and TFIDFVectorizer were used to create word vector on the training data. Finally predictions were conducted for each of the word vectors using Logistic Regression, Support Vector Classifier, Decision Tree Classifier, Random Forest Classifier and Multinomial Naive Bayes. Topical representation was visualised in a word cloud. The data sources and sentiment analysis were also visualised using Qliksense (results not uploaded to github)
+* Feature Generation - 
+> Add 'built_age' which will contain the age of the home at the date of sale.
+> Add 'renovation_age' which will contain the age of the renovation at the date of sale (if no renovation, use built age)
+> Add 'is_renovated' data of whether the home was renovated.
+> Add 'has_basement' data of whether the home has basement. 
 
-### 3. Predicting Customer Purchases using Machine Learning ###
+* Drop Unnecessary columns - 
+> This includes both source and generated columns as follows: ['date', 'day','month','year','month_upd','id', 'basement_size', 'built', 'renovation', 'latitude','longitude','review_score']
 
-<a href="https://github.com/ngalp/projects/blob/master/predictive_model.ipynb">Link to Jupyter Notebook</a>
+* Dealing with Outlier 
+> Drop rows where z_score > 3 for 'price' and 'lot_size' which was very skewed.
 
-For this project, the aim is to predict purchases using the target field TargetBuy (0, 1). The code includes data exploration and cleaning/ preparation steps. Modelling is then performed with various sklearn (scikit-learn) models listed below, as well as exploration of whether <a. Target Class Balancing using SMOTE (Synthetic Minority Oversampling Technique)> and <b. Dimensionality Reduction with PCA> have a positive impact on the prediction results. Grid-search is then performed on selected well-performing models. The final model(s) are applied to the test data.
+* Normalizing Values - 
+> The 'condition' column was converted to upper and converted to integer as ordinal.
+> Zipcode is deemed as categorical would be converted to dummy variables prior to modelling.
+> Standard scaler will be applied prior to running the model
 
+f. Explanation of your choice of models for each machine learning task.
 
-### 4. MNIST: Image Recognition ###
-<a href="https://github.com/ngalp/projects/blob/master/mnist.ipynb">Link to Jupyter Notebook</a>
+The following model were run for the regression experiments to explore multiple regression models and review the performance of each.
+* LinearRegression
+* Lasso
+* Ridge
+* ElasticNet
+* DecisionTreeRegressor
+* KNeighborsRegressor
+* SVR
+* SGDRegressor
+* RandomForestRegressor
+* GradientBoostingRegressor
+* AdaBoostRegressor
+* MLPRegressor
 
-The MNIST is widely known as the 'Hello World' dataset for computer vision. Records have already been size-normalized and centered in a fixed-size image, thus useful to try out different machine learning techniques as minimal efforts are required on preprocessing and formatting.
+The following model were run for the regression experiments to explore multiple regression models and review the performance of each.
+* LogisticRegression
+* DecisionTreeClassifier
+* KNeighborsClassifier
+* LinearSVC 
+* RandomForestClassifier
+* MLPClassifier
+
+g. Evaluation of the models developed. Any metrics used in the evaluation should also be explained.
+* For regression, SVR has the best RMSE of 107K.
+* RMSE is the standard deviation of the residuals (prediction errors). Residuals are a measure of how far from the regression line data points are; RMSE is a measure of how spread out these residuals are. 
+
+* For classification, MLC has the best Accuracy of 0.7027873946479999.
+
+## Other considerations for deploying the models developed.
+* More geo-related data could be incorporated into the model considering that King County government has numerous geo-related datasets online.
+* Increasing useful features could improve model performance
+* Data integrity could be improved, and investigation should be done on duplicate and missing data.
+* Feature selection, over sampling, grid search are additional ways to improve the model.
